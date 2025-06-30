@@ -7,9 +7,10 @@ import it.epicode.Capstone_Project.model.User;
 import it.epicode.Capstone_Project.repository.CapitoloRepository;
 import it.epicode.Capstone_Project.repository.StoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class StoriaService {
     @Autowired
     private StoriaRepository storiaRepository;

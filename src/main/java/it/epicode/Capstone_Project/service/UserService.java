@@ -8,9 +8,10 @@ import it.epicode.Capstone_Project.model.User;
 import it.epicode.Capstone_Project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
