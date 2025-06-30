@@ -37,10 +37,10 @@ public class SecurityConfig {
 
 
         httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/auth/**").permitAll());
-//        httpSecurity.authorizeHttpRequests(http->http.requestMatchers(HttpMethod.GET,"/studenti/**").permitAll());
 
-        httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/eventi/**").permitAll());
-        httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/prenotazioni/**").permitAll());
+
+        httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/capitoli/**").permitAll());
+        httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/storie/**").permitAll());
         httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/users/**").permitAll());
         httpSecurity.authorizeHttpRequests(http->http.requestMatchers(HttpMethod.GET).permitAll());
 
