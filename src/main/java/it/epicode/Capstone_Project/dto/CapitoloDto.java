@@ -13,7 +13,7 @@ public class CapitoloDto {
     @NotEmpty(message = "il contenuto non può essere nullo o vuoto!")
     private String contenuto;
     @NotNull(message = "il numero del capitolo non può essere nullo o vuoto!")
-    private int numeroCapitolo;
+    private Integer numeroCapitolo;
     @NotNull
     private int storiaId;
 }

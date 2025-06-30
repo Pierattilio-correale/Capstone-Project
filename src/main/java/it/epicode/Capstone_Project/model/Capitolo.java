@@ -13,7 +13,7 @@ public class Capitolo {
 
     private String titolo;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String contenuto;
 
     @Column(name = "numero_capitolo")
