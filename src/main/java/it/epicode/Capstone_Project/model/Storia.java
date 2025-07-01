@@ -19,7 +19,7 @@ public class Storia {
     @Column(name = "data_creazione")
     private LocalDateTime dataCreazione;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "storia")
     private List<Capitolo>capitoli;
 

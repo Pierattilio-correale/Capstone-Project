@@ -1,5 +1,6 @@
 package it.epicode.Capstone_Project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ public class Capitolo {
     @Column(name = "numero_capitolo")
     private int numeroCapitolo;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "storia_id")
     private Storia storia;
