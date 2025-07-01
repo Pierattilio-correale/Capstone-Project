@@ -2,7 +2,10 @@ package it.epicode.Capstone_Project.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.time.LocalDate;
 
 
 @Data
@@ -17,6 +20,8 @@ public class UserDto {
     private String email;
     @NotEmpty(message = "la password non può essere nulla o vuota!")
     private String password;
+    @NotNull(message = "la data di nascità non può essere nulla o vuota!")
+    private LocalDate dataNascita;
 
 
 }

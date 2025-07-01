@@ -32,6 +32,7 @@ if(userRepository.existsByUsername(userDto.getUsername())){
 user.setRole(Role.AUTHOR);
 user.setNome(userDto.getNome());
 user.setUsername(userDto.getUsername());
+user.setDataNascita(userDto.getDataNascita());
 user.setCognome(userDto.getCognome());
 user.setEmail(userDto.getEmail());
 user.setPassword(passwordEncoder.encode(userDto.getPassword()));
@@ -55,6 +56,7 @@ public User getUser(int id)throws NotFoundException {
         userDaAggiornare.setUsername(userDto.getUsername());
         userDaAggiornare.setCognome(userDto.getCognome());
         userDaAggiornare.setEmail(userDto.getEmail());
+        userDaAggiornare.setDataNascita(userDto.getDataNascita());
         if(!passwordEncoder.matches(userDto.getPassword(), userDaAggiornare.getPassword())){
             userDaAggiornare.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
