@@ -30,6 +30,7 @@ if(userRepository.existsByUsername(userDto.getUsername())){
 
 }
 user.setRole(Role.AUTHOR);
+user.setAvatar("https://ui-avatars.com/api/?name="+userDto.getUsername());
 user.setNome(userDto.getNome());
 user.setUsername(userDto.getUsername());
 user.setDataNascita(userDto.getDataNascita());
@@ -57,6 +58,7 @@ public User getUser(int id)throws NotFoundException {
         userDaAggiornare.setCognome(userDto.getCognome());
         userDaAggiornare.setEmail(userDto.getEmail());
         userDaAggiornare.setDataNascita(userDto.getDataNascita());
+        userDaAggiornare.setAvatar("https://ui-avatars.com/api/?name="+userDto.getUsername());
         if(!passwordEncoder.matches(userDto.getPassword(), userDaAggiornare.getPassword())){
             userDaAggiornare.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }

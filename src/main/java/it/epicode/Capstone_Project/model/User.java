@@ -27,6 +27,7 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "data_nascita")
     private LocalDate dataNascita;
+    private String avatar;
 
     private String password;
     @Enumerated(EnumType.STRING)
