@@ -18,7 +18,8 @@ public class Storia {
     private String descrizione;
     @Column(name = "data_creazione")
     private LocalDateTime dataCreazione;
-
+    @Column(name = "immagine_copertina")
+private String immagineCopertina;
 
     @OneToMany(mappedBy = "storia")
     private List<Capitolo>capitoli;

@@ -11,7 +11,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 //@CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -49,5 +51,11 @@ public class StoriaController {
     @PreAuthorize("hasAuthority('AUTHOR')")
     public void deleteStoria(@PathVariable  int id) throws NotFoundException {
         storiaService.deleteStoria(id);
+    }
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasAuthority('AUTHOR')")
+    public String patchStoria(@PathVariable int id, @RequestBody MultipartFile file) throws NotFoundException, IOException {
+        return storiaService.patchStoria(id,file);
+
     }
 }

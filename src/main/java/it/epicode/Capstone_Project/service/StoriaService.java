@@ -1,5 +1,6 @@
 package it.epicode.Capstone_Project.service;
 
+import com.cloudinary.Cloudinary;
 import it.epicode.Capstone_Project.dto.StoriaDto;
 import it.epicode.Capstone_Project.exception.NotFoundException;
 import it.epicode.Capstone_Project.model.Storia;
@@ -8,8 +9,11 @@ import it.epicode.Capstone_Project.repository.CapitoloRepository;
 import it.epicode.Capstone_Project.repository.StoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 @Service
 public class StoriaService {
@@ -20,6 +24,8 @@ public class StoriaService {
     private CapitoloRepository capitoloRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    Cloudinary cloudinary;
 
     public Storia saveStoria(StoriaDto storiaDto) throws NotFoundException {
         User user= userService.getUser(storiaDto.getUserId());
@@ -32,6 +38,7 @@ public class StoriaService {
         storia.setTitolo(storiaDto.getTitolo());
         storia.setDataCreazione(LocalDateTime.now());
         storia.setDescrizione(storiaDto.getDescrizione());
+        storia.setImmagineCopertina("");
 
         return storiaRepository.save(storia);
 
@@ -56,5 +63,12 @@ return storiaRepository.save(storiaDaAggiornare);
     public void  deleteStoria(int id) throws NotFoundException {
         Storia storiaDaCancellare = getStoria(id);
         storiaRepository.delete(storiaDaCancellare);
+    }
+    public String patchStoria(int id, MultipartFile file) throws NotFoundException, IOException {
+        Storia storiaDaPatchare= getStoria(id);
+        String url=(String)cloudinary.uploader().upload(file.getBytes(), Collections.emptyMap()).get("url");
+        storiaDaPatchare.setImmagineCopertina(url);
+        storiaRepository.save(storiaDaPatchare);
+        return url;
     }
 }
