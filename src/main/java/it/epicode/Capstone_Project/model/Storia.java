@@ -21,7 +21,11 @@ public class Storia {
     @Column(name = "immagine_copertina")
 private String immagineCopertina;
 
-    @OneToMany(mappedBy = "storia")
+    @OneToMany(
+            mappedBy = "storia",
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true
+    )
     private List<Capitolo>capitoli;
 
     @ManyToOne

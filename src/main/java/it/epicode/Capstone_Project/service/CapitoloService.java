@@ -2,24 +2,33 @@ package it.epicode.Capstone_Project.service;
 
 import it.epicode.Capstone_Project.dto.CapitoloDto;
 import it.epicode.Capstone_Project.exception.NotFoundException;
+import it.epicode.Capstone_Project.exception.UnauthorizedException;
 import it.epicode.Capstone_Project.model.Capitolo;
 import it.epicode.Capstone_Project.model.Storia;
 import it.epicode.Capstone_Project.repository.CapitoloRepository;
 import it.epicode.Capstone_Project.repository.StoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class CapitoloService {
 
     @Autowired
     private CapitoloRepository capitoloRepository;
+
     @Autowired
-private StoriaRepository storiaRepository;
+    private StoriaRepository storiaRepository;
 
     public Capitolo saveCapitolo(CapitoloDto capitoloDto) throws NotFoundException {
-        Storia storia= storiaRepository.findById(capitoloDto.getStoriaId()).orElseThrow(()->new NotFoundException("la storia con id "+ capitoloDto.getStoriaId() +" non esiste"));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        Storia storia = storiaRepository
+                .findByIdAndAutore_Username(capitoloDto.getStoriaId(), username)
+                .orElseThrow(() -> new UnauthorizedException("Non sei autorizzato a modificare questa storia"));
+
         Capitolo capitolo = new Capitolo();
         capitolo.setNumeroCapitolo(capitoloDto.getNumeroCapitolo());
         capitolo.setContenuto(capitoloDto.getContenuto());
@@ -28,24 +37,35 @@ private StoriaRepository storiaRepository;
 
         return capitoloRepository.save(capitolo);
     }
-    public List<Capitolo> listaCapitoli(){
-      return  capitoloRepository.findAll();
+
+    public List<Capitolo> listaCapitoli() {
+        return capitoloRepository.findAll();
     }
+
     public Capitolo getCapitolo(int id) throws NotFoundException {
-  return capitoloRepository.findById(id).orElseThrow(()->new NotFoundException("il capitolo con id "+id+" non è stato trovato"));
-
-    }
-    public Capitolo updateCaptiolo(int id , CapitoloDto capitoloDto) throws NotFoundException {
-        Capitolo capitoloDaAggiornare =getCapitolo(id);
-        capitoloDaAggiornare.setContenuto(capitoloDto.getContenuto());
-        capitoloDaAggiornare.setNumeroCapitolo(capitoloDto.getNumeroCapitolo());
-        capitoloDaAggiornare.setTitolo(capitoloDto.getTitolo());
-
-        return capitoloRepository.save(capitoloDaAggiornare);
+        return capitoloRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Il capitolo con id " + id + " non è stato trovato"));
     }
 
-    public  void deleteCapitolo(int id) throws NotFoundException {
-        Capitolo capitoloDaCancellare =getCapitolo(id);
-        capitoloRepository.delete(capitoloDaCancellare);
+    public Capitolo updateCaptiolo(int id, CapitoloDto capitoloDto) throws NotFoundException {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        Capitolo capitolo = capitoloRepository.findByIdAndStoria_Autore_Username(id, username)
+                .orElseThrow(() -> new UnauthorizedException("Non sei autorizzato a modificare questo capitolo"));
+
+        capitolo.setContenuto(capitoloDto.getContenuto());
+        capitolo.setNumeroCapitolo(capitoloDto.getNumeroCapitolo());
+        capitolo.setTitolo(capitoloDto.getTitolo());
+
+        return capitoloRepository.save(capitolo);
+    }
+
+    public void deleteCapitolo(int id) throws NotFoundException {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        Capitolo capitolo = capitoloRepository.findByIdAndStoria_Autore_Username(id, username)
+                .orElseThrow(() -> new UnauthorizedException("Non sei autorizzato a cancellare questo capitolo"));
+
+        capitoloRepository.delete(capitolo);
     }
 }
