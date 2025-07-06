@@ -46,6 +46,7 @@ public class StoriaService {
         storia.setTitolo(storiaDto.getTitolo());
         storia.setDataCreazione(LocalDateTime.now());
         storia.setDescrizione(storiaDto.getDescrizione());
+        storia.setGenere(storiaDto.getGenere());
         storia.setImmagineCopertina("https://dummyimage.com/512x800/cccccc/000000&text=Book+Cover");
 
         return storiaRepository.save(storia);
@@ -68,6 +69,7 @@ public class StoriaService {
 
         storia.setDescrizione(storiaDto.getDescrizione());
         storia.setTitolo(storiaDto.getTitolo());
+        storia.setGenere(storiaDto.getGenere());
 
         return storiaRepository.save(storia);
     }
