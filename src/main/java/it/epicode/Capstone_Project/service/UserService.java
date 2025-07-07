@@ -37,6 +37,7 @@ user.setDataNascita(userDto.getDataNascita());
 user.setCognome(userDto.getCognome());
 user.setEmail(userDto.getEmail());
 user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+user.setDescrizione("");
 
 return userRepository.save(user);
 }
@@ -58,6 +59,7 @@ public User getUser(int id)throws NotFoundException {
         userDaAggiornare.setCognome(userDto.getCognome());
         userDaAggiornare.setEmail(userDto.getEmail());
         userDaAggiornare.setDataNascita(userDto.getDataNascita());
+        userDaAggiornare.setDescrizione(userDto.getDescrizione());
         userDaAggiornare.setAvatar("https://ui-avatars.com/api/?name="+userDto.getUsername());
         if(!passwordEncoder.matches(userDto.getPassword(), userDaAggiornare.getPassword())){
             userDaAggiornare.setPassword(passwordEncoder.encode(userDto.getPassword()));

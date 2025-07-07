@@ -22,6 +22,7 @@ public class UserDto {
     private String password;
     @NotNull(message = "la data di nascità non può essere nulla o vuota!")
     private LocalDate dataNascita;
+    private String descrizione;
 
 
 }
