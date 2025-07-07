@@ -1,5 +1,6 @@
 package it.epicode.Capstone_Project.service;
 
+import it.epicode.Capstone_Project.dto.DescrizioneDto;
 import it.epicode.Capstone_Project.dto.UserDto;
 import it.epicode.Capstone_Project.enumerated.Role;
 import it.epicode.Capstone_Project.exception.AlreadyExistException;
@@ -72,5 +73,12 @@ public User getUser(int id)throws NotFoundException {
     public void deleteUser(int id)throws NotFoundException{
         User userDaEliminare = getUser(id);
         userRepository.delete(userDaEliminare);
+    }
+
+
+    public User aggiornaDescrizione(int id, DescrizioneDto dto) throws NotFoundException {
+        User user = getUser(id);
+        user.setDescrizione(dto.getDescrizione());
+        return userRepository.save(user);
     }
 }

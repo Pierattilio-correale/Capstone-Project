@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .requestMatchers("/capitoli/**").permitAll()
                 .requestMatchers("/storie/**").permitAll()
                 .requestMatchers("/users/**").permitAll()
+                .requestMatchers("/users/*/descrizione").permitAll()
                 .requestMatchers(HttpMethod.GET).permitAll()
                 .anyRequest().denyAll()
         );
@@ -54,7 +55,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
-        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE","PATCH", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setAllowCredentials(true);
 

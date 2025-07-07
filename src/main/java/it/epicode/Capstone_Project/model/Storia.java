@@ -17,6 +17,7 @@ public class Storia {
 
     private String titolo;
     private String genere;
+    @Column(columnDefinition = "TEXT")
     private String descrizione;
     @Column(name = "data_creazione")
     private LocalDateTime dataCreazione;
