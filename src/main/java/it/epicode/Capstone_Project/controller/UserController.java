@@ -12,7 +12,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +65,10 @@ public class UserController {
 
        return userService.aggiornaDescrizione(id,descrizioneDto);
 
+    }
+    @PatchMapping("/{id}")
+    public String userImgProfilo(@PathVariable int id ,@RequestBody MultipartFile file) throws NotFoundException, IOException {
+        return userService.patchImgUser(id,file);
     }
 }
 

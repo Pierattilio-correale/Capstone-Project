@@ -1,11 +1,13 @@
 package it.epicode.Capstone_Project.service;
 
+import com.cloudinary.Cloudinary;
 import it.epicode.Capstone_Project.dto.DescrizioneDto;
 import it.epicode.Capstone_Project.dto.UserDto;
 import it.epicode.Capstone_Project.enumerated.Role;
 import it.epicode.Capstone_Project.exception.AlreadyExistException;
 import it.epicode.Capstone_Project.exception.NotFoundException;
 import it.epicode.Capstone_Project.exception.UnauthorizedException;
+import it.epicode.Capstone_Project.model.Storia;
 import it.epicode.Capstone_Project.model.User;
 import it.epicode.Capstone_Project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 @Service
 public class UserService {
@@ -22,6 +27,8 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private Cloudinary cloudinary;
 
 public User saveUser(UserDto userDto) throws AlreadyExistException {
 User user = new User();
@@ -145,4 +152,36 @@ public User getUser(int id)throws NotFoundException {
         user.setDescrizione(dto.getDescrizione());
         return userRepository.save(user);
     }
+
+    public String patchImgUser(int id, MultipartFile file) throws NotFoundException, IOException {
+
+        User user = getUser(id);
+
+
+        String usernameAutenticato = SecurityContextHolder.getContext().getAuthentication().getName();
+
+
+        User userAutenticato = userRepository.findByUsername(usernameAutenticato)
+                .orElseThrow(() -> new NotFoundException("Utente autenticato non trovato"));
+
+
+        boolean isAdmin = userAutenticato.getRole() == Role.ADMIN;
+        boolean isStessoUtente = userAutenticato.getId() == user.getId();
+
+        if (!isAdmin && !isStessoUtente) {
+            throw new UnauthorizedException("Non sei autorizzato a modificare l'immagine di questo utente");
+        }
+
+
+        String url = (String) cloudinary.uploader()
+                .upload(file.getBytes(), Collections.emptyMap())
+                .get("url");
+
+
+        user.setAvatar(url);
+        userRepository.save(user);
+
+        return url;
+    }
 }
+
