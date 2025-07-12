@@ -2,6 +2,7 @@ package it.epicode.Capstone_Project.service;
 
 import com.cloudinary.Cloudinary;
 import it.epicode.Capstone_Project.dto.DescrizioneDto;
+import it.epicode.Capstone_Project.dto.UpdateBaseUserDto;
 import it.epicode.Capstone_Project.dto.UserDto;
 import it.epicode.Capstone_Project.enumerated.Role;
 import it.epicode.Capstone_Project.exception.AlreadyExistException;
@@ -182,6 +183,38 @@ public User getUser(int id)throws NotFoundException {
         userRepository.save(user);
 
         return url;
+    }
+    public User patchBaseUserData(int id, UpdateBaseUserDto dto) throws NotFoundException {
+        User user = getUser(id);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String usernameAutenticato = principal instanceof UserDetails
+                ? ((UserDetails) principal).getUsername()
+                : principal.toString();
+
+        User userAutenticato = userRepository.findByUsername(usernameAutenticato)
+                .orElseThrow(() -> new NotFoundException("Utente autenticato non trovato"));
+
+        boolean isAdmin = userAutenticato.getRole() == Role.ADMIN;
+        boolean isStessoUtente = userAutenticato.getId() == user.getId();
+
+        if (!isAdmin && !isStessoUtente) {
+            throw new UnauthorizedException("Non sei autorizzato a modificare questo utente");
+        }
+
+        if (dto.getUsername() != null) {
+            user.setUsername(dto.getUsername());
+        }
+
+        if (dto.getEmail() != null) {
+            user.setEmail(dto.getEmail());
+        }
+
+        if (dto.getDataNascita() != null) {
+            user.setDataNascita(dto.getDataNascita());
+        }
+
+        return userRepository.save(user);
     }
 }
 

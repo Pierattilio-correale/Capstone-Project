@@ -1,6 +1,7 @@
 package it.epicode.Capstone_Project.controller;
 
 import it.epicode.Capstone_Project.dto.DescrizioneDto;
+import it.epicode.Capstone_Project.dto.UpdateBaseUserDto;
 import it.epicode.Capstone_Project.dto.UserDto;
 import it.epicode.Capstone_Project.exception.NotFoundException;
 import it.epicode.Capstone_Project.exception.ValidationException;
@@ -69,6 +70,12 @@ public class UserController {
     @PatchMapping("/{id}")
     public String userImgProfilo(@PathVariable int id ,@RequestBody MultipartFile file) throws NotFoundException, IOException {
         return userService.patchImgUser(id,file);
+    }
+    @PatchMapping("/{id}/base")
+    public User patchUserBaseInfo(@PathVariable int id,
+                                                  @RequestBody UpdateBaseUserDto updateBaseUserDto) throws NotFoundException {
+        return userService.patchBaseUserData(id, updateBaseUserDto);
+
     }
 }
 
