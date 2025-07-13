@@ -59,5 +59,9 @@ public class CommentiController {
         commentiService.deleteCommento(id);
     }
 
+    @GetMapping("/capitolo/{capitoloId}")
+    public List<Commenti> getCommentiByCapitolo(@PathVariable int capitoloId) throws NotFoundException {
+        return commentiService.getCommentiByCapitoloId(capitoloId);
+    }
 
 }

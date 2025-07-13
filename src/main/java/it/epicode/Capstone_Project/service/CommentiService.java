@@ -81,4 +81,10 @@ public class CommentiService {
         Commenti commentiDaCancellare = getCommento(id);
         commentiRepository.delete(commentiDaCancellare);
     }
+    public List<Commenti> getCommentiByCapitoloId(int capitoloId) throws NotFoundException {
+        if (!capitoloRepository.existsById(capitoloId)) {
+            throw new NotFoundException("Capitolo non trovato");
+        }
+        return commentiRepository.findByCapitoloId(capitoloId);
+    }
 }
