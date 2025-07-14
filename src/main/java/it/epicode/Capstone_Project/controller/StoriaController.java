@@ -57,4 +57,8 @@ public class StoriaController {
         return storiaService.patchStoria(id,file);
 
     }
+    @GetMapping("/search")
+    public List<Storia> cercaPerTitolo(@RequestParam String titolo) {
+        return storiaService.cercaPerTitolo(titolo);
+    }
 }

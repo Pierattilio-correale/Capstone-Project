@@ -95,4 +95,7 @@ public class StoriaService {
 
         return url;
     }
+    public List<Storia> cercaPerTitolo(String titolo) {
+        return storiaRepository.findByTitoloContainingIgnoreCase(titolo);
+    }
 }
