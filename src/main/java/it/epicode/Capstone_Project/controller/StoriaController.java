@@ -53,8 +53,12 @@ public class StoriaController {
     }
     @PatchMapping("/{id}")
     @PreAuthorize("hasAuthority('AUTHOR')")
-    public String patchStoria(@PathVariable int id, @RequestBody MultipartFile file) throws NotFoundException, IOException {
+    public String patchStoria(@PathVariable int id, @RequestParam("file") MultipartFile file) throws NotFoundException, IOException {
         return storiaService.patchStoria(id,file);
 
+    }
+    @GetMapping("/search")
+    public List<Storia> cercaPerTitolo(@RequestParam String titolo) {
+        return storiaService.cercaPerTitolo(titolo);
     }
 }

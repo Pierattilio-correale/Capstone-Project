@@ -14,8 +14,10 @@ import java.util.List;
 public class StoriaDto {
     @NotEmpty(message = "il titolo della storia non può essere nullo o vuoto")
     private String titolo;
-    @NotEmpty(message = "la descrizione della storia non può essere nulla o vuota")
+
     private String descrizione;
+    @NotEmpty(message = "il genere della storia non può essere nulla o vuota")
+    private String genere;
     private int userId;
     private List<Integer> capitoloId;
 }

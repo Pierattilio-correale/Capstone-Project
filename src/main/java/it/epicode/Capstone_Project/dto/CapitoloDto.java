@@ -10,7 +10,7 @@ import lombok.Data;
 public class CapitoloDto {
     @NotEmpty(message = "il titolo non può essere nullo o vuoto!")
     private String titolo;
-    @NotEmpty(message = "il contenuto non può essere nullo o vuoto!")
+   
     private String contenuto;
     @NotNull(message = "il numero del capitolo non può essere nullo o vuoto!")
     private Integer numeroCapitolo;

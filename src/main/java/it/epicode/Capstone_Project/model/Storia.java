@@ -1,6 +1,7 @@
 package it.epicode.Capstone_Project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +16,8 @@ public class Storia {
     private int id;
 
     private String titolo;
+    private String genere;
+    @Column(columnDefinition = "TEXT")
     private String descrizione;
     @Column(name = "data_creazione")
     private LocalDateTime dataCreazione;
@@ -30,6 +33,7 @@ private String immagineCopertina;
 
     @ManyToOne
     @JoinColumn(name = "autore_id")
+    @JsonIgnoreProperties("storie")
     private User autore;
 
 }

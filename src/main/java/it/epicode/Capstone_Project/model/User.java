@@ -28,12 +28,13 @@ public class User implements UserDetails {
     @Column(name = "data_nascita")
     private LocalDate dataNascita;
     private String avatar;
+    private String descrizione;
 
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "autore")
     private List<Storia>storie;
 
