@@ -29,7 +29,6 @@ public class UserController {
 
 
     @GetMapping("")
-    @PreAuthorize("hasAuthority('AUTHOR')")
     public List<User> getAllUser(){
         return  userService.getAllUser();
     }

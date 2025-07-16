@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface StoriaRepository extends JpaRepository<Storia,Integer> {
     Optional<Storia> findByIdAndAutore_Username(int id, String username);
     List<Storia> findByTitoloContainingIgnoreCase(String titolo);
+    List<Storia> findByAutore_Username(String username);
 }

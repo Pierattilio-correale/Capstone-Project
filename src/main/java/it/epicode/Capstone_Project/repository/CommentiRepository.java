@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CommentiRepository extends JpaRepository<Commenti, Integer> {
     List<Commenti> findByCapitoloId(int capitoloId);
+    int countByCapitolo_Storia_Autore_Username(String username);
 }

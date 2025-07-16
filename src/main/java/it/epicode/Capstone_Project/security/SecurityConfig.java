@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .requestMatchers("/capitoli/**").permitAll()
                 .requestMatchers("/storie/**").permitAll()
                 .requestMatchers("/commenti/**").permitAll()
+                .requestMatchers("/api/statistiche/**").permitAll()
                 .requestMatchers("/users/**").permitAll()
                 .requestMatchers("/users/*/descrizione").permitAll()
                 .requestMatchers(HttpMethod.GET).permitAll()

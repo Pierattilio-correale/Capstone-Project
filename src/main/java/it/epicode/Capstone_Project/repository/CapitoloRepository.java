@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface CapitoloRepository extends JpaRepository<Capitolo,Integer> {
     Optional<Capitolo> findByIdAndStoria_Autore_Username(int id, String username);
+    int countByStoria_Autore_Username(String username);
 }
