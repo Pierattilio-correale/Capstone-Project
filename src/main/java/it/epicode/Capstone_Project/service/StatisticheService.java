@@ -22,18 +22,10 @@ public class StatisticheService {
     @Autowired
     private UserRepository userRepository;
 
-    public StatisticheDto getStatistichePersonali() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
-
-        int storie = storiaRepository.findByAutore_Username(username).size();
-
-
-        int capitoli = capitoloRepository.countByStoria_Autore_Username(username);
-
-
-        int commenti = commentiRepository.countByCapitolo_Storia_Autore_Username(username);
-
+    public StatisticheDto getStatistichePersonali(int autoreId) {
+        int storie = storiaRepository.findByAutore_Id(autoreId).size();
+        int capitoli = capitoloRepository.countCapitoliByAutoreId(autoreId);
+        int commenti = commentiRepository.countCommentiByAutoreId(autoreId);
 
         double media = (storie > 0) ? (double) capitoli / storie : 0.0;
 
@@ -46,9 +38,9 @@ public class StatisticheService {
         return dto;
     }
     public StatisticheDto getStatisticheGlobali() {
-        int storie = (int) storiaRepository.count();   // conta tutte le storie
-        int capitoli = (int) capitoloRepository.count(); // conta tutti i capitoli
-        int commenti = (int) commentiRepository.count(); // conta tutti i commenti
+        int storie = (int) storiaRepository.count();
+        int capitoli = (int) capitoloRepository.count();
+        int commenti = (int) commentiRepository.count();
 
         double media = (storie > 0) ? (double) capitoli / storie : 0.0;
 

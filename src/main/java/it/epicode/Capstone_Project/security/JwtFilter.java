@@ -66,8 +66,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
         AntPathMatcher pathMatcher = new AntPathMatcher();
 
-        if (method.equalsIgnoreCase("GET")) {
-
+        if (method.equalsIgnoreCase("GET") && (
+                pathMatcher.match("/storie/**", path) ||
+                        pathMatcher.match("/capitoli/**", path) ||
+                        pathMatcher.match("/commenti/**", path) ||
+                        pathMatcher.match("/users/**", path)
+        )) {
             return true;
         }
 
@@ -76,7 +80,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return true;
         }
 
-
+     
         return false;
     }
 }
