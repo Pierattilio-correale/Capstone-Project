@@ -38,6 +38,19 @@ Clona il repository:
 git clone https://github.com/Pierattilio-correale/Capstone-Project.git
 Configura il database PostgreSQL (crea il db e aggiorna application.properties o application.yml)
 
+📋 Configurazione ambiente
+Per far funzionare correttamente il backend, devi fornire alcune configurazioni sensibili come la password del database PostgreSQL e le chiavi per servizi esterni.
+
+1. Creare il file env.properties
+Crea un file chiamato env.properties nella root del progetto (o in una cartella esterna), e inserisci le seguenti proprietà, sostituendo i valori con i tuoi:
+
+properties
+postgresql.password=tuo_password_postgres
+cloud_name=tuo_cloud_name
+api_key=tuo_api_key
+api_secret=tuo_api_secret
+⚠️ Nota: questo file NON deve essere caricato nel repository Git (aggiungilo a .gitignore).
+
 Costruisci ed esegui il progetto:
 4. L’API sarà disponibile su http://localhost:8080 🌐
 
